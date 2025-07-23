@@ -5,7 +5,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import styles from '../CSS/SignIn.module.css'
 import axios from "axios";
-import { Link, replace, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 interface FormErrors{
@@ -60,20 +60,23 @@ function SignIn(){
         if (validateForm()) {
             setIsLoading(true);
             try{
-                console.log("Form is valid!", formData);
+                console.log("Form is valid!");
                 await axios.post("http://localhost:3000/users/login", formData).then((response) =>{
                 console.log("User Logined Successfully");
+                localStorage.setItem('userName', response.data.user.name); /*Stores the userName in the local Storage 
+                                                                            which can be later accessed */
                     setFormData({
                         email: "",
                         password: "",
                     });
                     setErrors({});
-                localStorage.setItem('userName', response.data.name);
+                
                 navigate("/HomePage", {replace: true});
 
                 });
             }catch (error: any){
                 console.error("Error Signing in user");
+                alert('Error signing in');
             }finally{
                 setIsLoading(false);
             }
