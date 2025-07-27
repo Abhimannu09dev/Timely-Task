@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require("../models/userModel");
-
+const jwt = require('jsonwebtoken')
 
 // Function to create user
 async function createUser(req, res, next){
@@ -33,9 +33,6 @@ async function createUser(req, res, next){
 }
 
 
-
-
-
 // Function to login the user
 async function loginUser(req,res,next) {
     try{
@@ -62,11 +59,19 @@ async function loginUser(req,res,next) {
         const userDetails = {
             _id: user._id,
             name: user.name,
-            email: user. email,
+            email: user.email,
         };
+        
+        const payload = {userID: user._id};
+        console.log(payload);
 
+        const token = jwt.sign(payload, process.env.JWT_SECRET,{
+                expiresIn: "1h"
+            });
+            
         res.status(200).json({
             message: 'Login successfull',
+            token: token,
             user: userDetails,
         });
 
@@ -76,7 +81,6 @@ async function loginUser(req,res,next) {
 
     }
 }
-
 module.exports = {
     createUser,
     loginUser
