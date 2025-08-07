@@ -226,4 +226,3 @@ This is a personal project, but feedback and suggestions are welcome!
 
 ---
 
-**Built with ❤️ using modern web technologies**
