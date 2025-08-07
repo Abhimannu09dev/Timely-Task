@@ -5,10 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/userRoutes');
+var userRouter = require('./routes/userRoutes');
 var taskRouter = require('./routes/taskRoutes');
 
-
+var app = express();
 
 var cors = require('cors');
 var app = express();
@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
 
 // getting-started.js Connect Mongoose 
@@ -36,5 +36,6 @@ async function main() {
     console.log("Database connected successfully",data.connection.name)
   });
 }
+
 
 module.exports = app;

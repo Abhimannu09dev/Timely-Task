@@ -1,9 +1,16 @@
-.tasks{
+.mainContent {
+    background-color: #eef4ff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tasks {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    gap: 30px;
 }
-.taskList{
+.taskList {
     background-color: #fff;
     height: 5em;
     width: 18em;
@@ -15,28 +22,238 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.totalTasks, .completedTasks, .pendingTasks{
+.totalTasks, .completedTasks, .pendingTasks {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 18px;
 }
-.totalIcon{
+.totalIcon {
     border-radius: 5px;
     font-size: 42px;
     background-color: #eef4ff;
     color: #4278ee;
     padding: 5px;
 }
-.pendingIcon{
+.pendingIcon {
     border-radius: 5px;
     color: #ec6d28;
     font-size: 42px;
     background-color: #ffedd5;
     padding: 3px;
 }
-.completedIcon{
+.completedIcon {
     border-radius: 5px;
-    color:  #43b76d;
+    color: #43b76d;
     font-size: 42px;
-    background-color: #dcfce7 ;
+    background-color: #dcfce7;
     padding: 3px;
 }
+.navTasks {
+    display: flex;
+    flex-direction: row;
+    margin: 1.2rem;
+    justify-content: space-around;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.navTasks button:active {
+    background: linear-gradient(to right, #0e5bc0, #bb00ff);
+    color: #fff;
+}
+.all, .pending, .completed {
+    padding: 1.2rem;
+    margin: 0;
+    border: none;
+    background-color: #fff;
+    border-radius: 10px;
+    font-size: 16px;
+}
+button:hover {
+    cursor: pointer;
+}
+.noTaskMessage {
+    background-color: #fff;
+    height: 15rem;
+    width: 60rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #424141c0;
+}
+.noTaskMessage svg {
+    font-size: 50px;
+    margin: 20px;
+}
+.noTaskMessage h3 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-bottom: 20px;
+}
+.taskItem {
+    background-color: #fff;
+    width: 60rem;
+    max-width: 90%; 
+    border-radius: 10px;
+    display: flex;
+    margin: 15px 0; 
+    padding: 15px; 
+    align-items: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); 
+    /* justify-content: space-between; */
+}
+.taskItem:hover {
+    transform: translateY(-2px); 
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15); 
+}
+.taskItem h4 {
+    font-size: 22px; 
+    font-weight: 600;
+    text-align: left;
+    margin: 0 0 10px 0; 
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #333; 
+}
+.taskDesc {
+    display: flex;
+    flex-direction: row; 
+    gap: 5px; /* Spacing between details */
+    font-size: 14px; /* Smaller font for details */
+    color: #424141c0;
+}
+.taskItem input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    accent-color: #4278ee; /* Matches theme */
+    cursor: pointer;
+}
+.editTask {
+    display: flex;
+    gap: 10px; /* Space between edit and delete buttons */
+}
+.editTask button {
+    background: none;
+    border: none;
+    font-size: 24px; /* Larger icons */
+    color: #424141c0;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.editTask button:hover {
+    background-color: #eef4ff; /* Light background on hover */
+    color: #4278ee; /* Theme color */
+}
+.createTask {
+    font-size: 32px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 50%;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background: linear-gradient(to right, #0e5bc0, #bb00ff);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+.createTask:hover {
+    transform: scale(1.1);
+}
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in; /* Fade-in animation */
+}
+.modalContent {
+    background-color: #fff;
+    padding: 25px; /* Slightly more padding */
+    border-radius: 12px; /* Slightly larger radius */
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+    transform: translateY(0);
+    animation: slideIn 0.3s ease-out; /* Slide-in animation */
+}
+.modalContent h2 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+.formGroup {
+    margin-bottom: 20px; 
+}
+.formGroup label {
+    display: block;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #424141;
+}
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+    width: 100%;
+    padding: 10px; /* More padding */
+    border: 1px solid #d6dae4;
+    border-radius: 6px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+    outline: none;
+    border-color: #4278ee; /* Theme color on focus */
+    box-shadow: 0 0 5px rgba(66, 120, 238, 0.3); /* Subtle glow */
+}
+.formGroup textarea {
+    height: 120px; /* Slightly taller */
+    resize: vertical;
+}
+.formActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.formActions button {
+    padding: 12px 24px; /* Larger buttons */
+    border: none;
+    border-radius: 6px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.formActions button[type="submit"] {
+    background: linear-gradient(to right, #0e5bc0, #bb00ff);
+    color: #fff;
+}
+.formActions button[type="submit"]:hover {
+    transform: scale(1.05); /* Slight scale on hover */
+}
+.formActions button[type="button"] {
+    background-color: #d6dae4;
+    color: #424141c0;
+}
+.formActions button[type="button"]:hover {
+    background-color: #c0c7d6; /* Darker on hover */
+    transform: scale(1.05);
+}
+ 

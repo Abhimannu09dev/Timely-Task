@@ -14,10 +14,6 @@ const taskSchema = new Schema({
         enum: ["pending", "completed"],
         default: "pending",
     },
-    dueDate:{
-        type: Date,
-        required: false,
-    },
     priority: {
         type: String,
         enum: ["high","medium", "low"],

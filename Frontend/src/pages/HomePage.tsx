@@ -1,6 +1,5 @@
 import Body from "../Component/Body";
 import Heading from "../Component/Heading";
-import NavTasks from "../Component/NavTasks";
 
 function HomePage(){
     return(
@@ -11,7 +10,6 @@ function HomePage(){
             }}>
                 <Heading />
                 <Body />
-                <NavTasks />
             </div>
             
         </>

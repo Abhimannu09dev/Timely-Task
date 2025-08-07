@@ -4,11 +4,12 @@ import '../CSS/Heading.css'
 import { useNavigate } from "react-router-dom";
 
 function Heading(){
-    const userName = localStorage.getItem("userName") || "Guest";// To get the userName
+    const userName = localStorage.getItem("userName");// To get the userName
     const navigate=useNavigate();
 
     const handleLogout = () =>{
         localStorage.removeItem("userName");
+        localStorage.removeItem("token");
         navigate("/", {replace: true});
     }
  
@@ -23,16 +24,6 @@ function Heading(){
                     <button className="logout" onClick={handleLogout}><LuLogOut style={{marginRight: '10px'}} />Logout</button>
                 </div>
             </div>
-            <main>
-                <div style={{textAlign: 'center'}}>
-                    <div className="welcome">
-                        <h1>Welcome back, {userName}</h1>
-                        <p>Ready to tackle your tasks and make today productive?</p>
-                    </div>
-                </div>
-
-            </main>
-            
         </>
     );
 }

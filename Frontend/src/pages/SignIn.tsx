@@ -63,8 +63,10 @@ function SignIn(){
                 console.log("Form is valid!");
                 await axios.post("http://localhost:3000/users/login", formData).then((response) =>{
                 console.log("User Logined Successfully");
-                localStorage.setItem('userName', response.data.user.name); /*Stores the userName in the local Storage 
-                                                                            which can be later accessed */
+                /*Stores the userName and token in the local Storage 
+                    which can be later accessed */
+                localStorage.setItem('userName', response.data.user.name); 
+                localStorage.setItem("token", response.data.token);
                     setFormData({
                         email: "",
                         password: "",

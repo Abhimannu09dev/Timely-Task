@@ -89,6 +89,7 @@ function Signup(){
                 });
             }catch (error: any){
                 console.error("Error registering user");
+                alert("Error Registering User");
             }
             
         }else{
