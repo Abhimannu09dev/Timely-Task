@@ -50,7 +50,7 @@ backend/
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
+- Node.js (version 20 or higher)
 - MongoDB Atlas account or local MongoDB installation
 - npm or yarn package manager
 
@@ -58,7 +58,7 @@ backend/
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/Abhimannu09dev/Timely-Task.git
    cd timely-task-backend
    ```
 
