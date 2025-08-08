@@ -34,7 +34,7 @@ Timely Task is a full-stack web application that helps users manage their tasks 
 
 1. **Clone and setup backend**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Abhimannu09dev/Timely-Task.git
    cd timely-task/backend
    npm install
    
@@ -152,8 +152,6 @@ timely-task/
 JWT_SECRET=your_production_secret
 MONGO_URL=mongodb+srv://...
 
-# Deploy to Heroku/Railway/Render
-git push heroku main
 ```
 
 ### Frontend Deployment  
