@@ -18,17 +18,24 @@ async function createUser(req, res, next){
             return res.status(400).json({error: 'Password must be at least 6 characters'})
         }
 
-        const hashedPassword = await bcrypt.hash(password,10);
+        // Check if user exits
+        const existingUser = await User.findOne({email});
+        if(!existingUser){
+            const hashedPassword = await bcrypt.hash(password,10);
+            const user = new User({name, email, password:hashedPassword});
+            await user.save();
+            res.status(201).json({
+                message: "User Created",
+                user,
+            })
+        }else{
+            return res.status(409).json({error: 'User already exists'});
+        }
 
-        const user = new User({name, email, password:hashedPassword});
-        await user.save();
-        res.status(201).json({
-            message: "User Created",
-            user,
-        })
+        
     }catch (error){
         console.error("Error creating user");
-        return res.status(400).json({error: "The "})
+        return res.status(400).json({error: "Error creating user"})
     }
 }
 

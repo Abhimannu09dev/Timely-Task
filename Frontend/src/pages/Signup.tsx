@@ -70,14 +70,14 @@ function Signup(){
     }
 
     // Function to handle the submit 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
+    const handleSubmit =async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault(); // Prevent the default behaviour of the submit button
 
         
         if (validateForm()){
             try{
                 console.log("Form is valid!", formData);
-                axios.post("http://localhost:3000/users/create", formData).then((response) =>{
+                await axios.post("http://localhost:3000/users/create", formData).then((response) =>{
                 console.log("User Registered Successfully");
                     setFormData({
                         name: "",
@@ -87,9 +87,15 @@ function Signup(){
                     });
                     setErrors({});
                 });
+            
             }catch (error: any){
-                console.error("Error registering user");
-                alert("Error Registering User");
+                if(error.response.status === 409){
+                    alert("User already exists.");
+                    
+                }else{
+                    console.error("Error registering user");
+                    alert("Error Registering User");
+                }
             }
             
         }else{
