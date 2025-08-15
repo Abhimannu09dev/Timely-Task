@@ -6,7 +6,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useState } from "react";
 import styles  from '../CSS/Signup.module.css'
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FormErrors{
     name?: string,
@@ -69,15 +69,16 @@ function Signup(){
         return Object.keys(newErrors).length ===0;
     }
 
+    const navigate = useNavigate();
     // Function to handle the submit 
     const handleSubmit =async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault(); // Prevent the default behaviour of the submit button
-
+        
         
         if (validateForm()){
             try{
                 console.log("Form is valid!", formData);
-                await axios.post("http://localhost:3000/users/create", formData).then((response) =>{
+                await axios.post("http://localhost:3000/users/create", formData).then(() =>{
                 console.log("User Registered Successfully");
                     setFormData({
                         name: "",
@@ -86,6 +87,7 @@ function Signup(){
                         confirmPassword:"",
                     });
                     setErrors({});
+                    navigate("/");
                 });
             
             }catch (error: any){
