@@ -40,7 +40,5 @@ async function main() {
 
 
 
-module.exports = {
-  app,
-  handler:serverless(app)
-};
+module.exports = serverless(app);
+module.exports.app = app;
