@@ -18,7 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({ origin: 'https://timely-task-3xovs2r7r-abhimannu-singh-kunwars-projects.vercel.app' }));
+app.use(cors({
+  origin: [
+    'https://timely-task-3xovs2r7r-abhimannu-singh-kunwars-projects.vercel.app',
+    'http://localhost:5173'
+  ],
+}));
 
 // Routes
 app.use('/', indexRouter);
@@ -28,15 +33,19 @@ app.use('/tasks', taskRouter);
 // getting-started.js Connect Mongoose 
 const mongoose = require('mongoose');
 
-main().catch(err => console.log(err));
-
+// MongoDB connection
 async function main() {
-  await mongoose
-  .connect(process.env.MONGO_URL)
-  .then(data=>{
-    console.log("Database connected successfully",data.connection.name)
-  });
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Database connected successfully:', conn.connection.name);
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+  }
 }
+main();
 
 
 
