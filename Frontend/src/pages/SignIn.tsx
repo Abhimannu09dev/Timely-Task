@@ -6,6 +6,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styles from '../CSS/SignIn.module.css'
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
 
 
 interface FormErrors{
@@ -63,6 +64,17 @@ function SignIn(){
                 console.log("Form is valid!");
                 await axios.post("http://localhost:3000/users/login", formData).then((response) =>{
                 console.log("User Logined Successfully");
+                toast.success('User Logined Successfully', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
                 /*Stores the userName and token in the local Storage 
                     which can be later accessed */
                 localStorage.setItem('userName', response.data.user.name); 
@@ -71,14 +83,24 @@ function SignIn(){
                         email: "",
                         password: "",
                     });
-                    setErrors({});
+                    setErrors({});Error
                 
                 navigate("/HomePage", {replace: true});
 
                 });
             }catch (error: any){
                 console.error("Error Signing in user");
-                alert('Error signing in');
+                toast.error('Error Signing in user', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             }finally{
                 setIsLoading(false);
             }

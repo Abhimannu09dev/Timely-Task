@@ -7,6 +7,7 @@ import { useState } from "react";
 import styles  from '../CSS/Signup.module.css'
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
 
 interface FormErrors{
     name?: string,
@@ -37,6 +38,7 @@ function Signup(){
     // Creaton of default state
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     //Creation of form validation
     const [errors, setErrors] = useState<FormErrors>({});// Error State with FormErros interface
@@ -73,10 +75,11 @@ function Signup(){
     // Function to handle the submit 
     const handleSubmit =async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault(); // Prevent the default behaviour of the submit button
-        
+        setIsLoading(true);
         
         if (validateForm()){
             try{
+                document.body.style.cursor = "wait"; //Set cursor to loading state
                 console.log("Form is valid!", formData);
                 await axios.post("http://localhost:3000/users/create", formData).then(() =>{
                 console.log("User Registered Successfully");
@@ -87,25 +90,56 @@ function Signup(){
                         confirmPassword:"",
                     });
                     setErrors({});
+                    toast.success('User created', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                    });
                     navigate("/");
                 });
             
             }catch (error: any){
                 if(error.response.status === 409){
-                    alert("User already exists.");
-                    
+                    toast.error('User already created', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
                 }else{
                     console.error("Error registering user");
-                    alert("Error Registering User");
+                    toast.error('Error Registering User', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
                 }
+            }finally{
+                document.body.style.cursor = "default"; //Set cursor to default state
+                setIsLoading(false);
             }
             
         }else{
             console.log("Form has errors");
         }
     }
-        
-
     return(
         <>
             <div className={styles.container}>
@@ -164,7 +198,7 @@ function Signup(){
                             </span>
                         </div>
                         {errors.password && <p className={styles.error}>{errors.confirmPassword}</p>}
-                        <button type="submit" className={styles.button}>Create Account</button>
+                        <button type="submit" className={styles.button} disabled={isLoading}>{isLoading ? "Creating..." :"Create Account"}</button>
                     </form>
                     <p className={styles.desc}> Already have an account? <Link to="/">Sign In</Link></p>
                 </div>

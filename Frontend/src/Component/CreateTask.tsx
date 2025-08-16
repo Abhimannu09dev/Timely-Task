@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "../CSS/Body.css";
 import type { Task } from "./Body"; // Import Task interface
+import { Bounce, toast } from "react-toastify";
 
 interface CreateTaskProps {
   onClose: () => void;
@@ -84,11 +85,33 @@ function CreateTask({ onClose, onTaskCreated, taskToEdit }: CreateTaskProps) {
             },
           }
         );
+        toast.success('Task created!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       }
       await onTaskCreated(); // Refresh task list
     } catch (error) {
       console.error("Error saving task:", error);
-      setError("Failed to save task. Please try again.");
+      // setError("Failed to save task. Please try again.");
+      toast.error('Failed to save task. Please try again.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
 
