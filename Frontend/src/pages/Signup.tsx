@@ -5,7 +5,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import { useState } from "react";
 import styles  from '../CSS/Signup.module.css'
-import axios from "axios";
+import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
@@ -43,7 +43,7 @@ function Signup(){
     //Creation of form validation
     const [errors, setErrors] = useState<FormErrors>({});// Error State with FormErros interface
     const validateForm = () =>{
-        const newErrors: any = {};
+        const newErrors: FormErrors = {};
 
         if(!formData.name.trim()){
             newErrors.name = "Name is required";
@@ -81,7 +81,7 @@ function Signup(){
             try{
                 document.body.style.cursor = "wait"; //Set cursor to loading state
                 console.log("Form is valid!", formData);
-                await axios.post("http://localhost:3000/users/create", formData).then(() =>{
+                await api.post("/users/create", formData).then(() =>{
                 console.log("User Registered Successfully");
                     setFormData({
                         name: "",
@@ -104,8 +104,8 @@ function Signup(){
                     navigate("/");
                 });
             
-            }catch (error: any){
-                if(error.response.status === 409){
+            }catch (error: unknown){
+                if((error as { response: { status: number } }).response.status === 409){
                     toast.error('User already created', {
                         position: "bottom-right",
                         autoClose: 5000,
@@ -197,7 +197,7 @@ function Signup(){
                                         {showConfirmPassword ? <MdVisibilityOff /> :<MdVisibility />}
                             </span>
                         </div>
-                        {errors.password && <p className={styles.error}>{errors.confirmPassword}</p>}
+                        {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
                         <button type="submit" className={styles.button} disabled={isLoading}>{isLoading ? "Creating..." :"Create Account"}</button>
                     </form>
                     <p className={styles.desc}> Already have an account? <Link to="/">Sign In</Link></p>

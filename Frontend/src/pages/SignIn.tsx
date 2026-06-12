@@ -4,7 +4,7 @@ import { MdOutlineLock } from "react-icons/md";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import styles from '../CSS/SignIn.module.css'
-import axios from "axios";
+import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
@@ -62,7 +62,7 @@ function SignIn(){
             setIsLoading(true);
             try{
                 console.log("Form is valid!");
-                await axios.post("http://localhost:3000/users/login", formData).then((response) =>{
+                await api.post("/users/login", formData).then((response) =>{
                 console.log("User Logined Successfully");
                 toast.success('User Logined Successfully', {
                     position: "bottom-right",
@@ -83,12 +83,12 @@ function SignIn(){
                         email: "",
                         password: "",
                     });
-                    setErrors({});Error
+                    setErrors({});
                 
-                navigate("/HomePage", {replace: true});
+                    navigate("/HomePage", {replace: true});
 
                 });
-            }catch (error: any){
+            }catch {
                 console.error("Error Signing in user");
                 toast.error('Error Signing in user', {
                     position: "bottom-right",
