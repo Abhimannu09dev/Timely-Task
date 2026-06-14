@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 
 import "../CSS/Body.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Navigate } from "react-router-dom";
 import CreateTask from "./CreateTask";
 
@@ -63,7 +63,7 @@ function Body() {
       return;
     }
     try {
-      const response = await axios.get("http://localhost:3000/tasks/getTasks", {
+      const response = await api.get("/tasks/getTasks", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -115,8 +115,8 @@ function Body() {
       return;
     }
     try {
-      const response = await axios.put(
-        `http://localhost:3000/tasks/update/${taskID}`,
+      const response = await api.put(
+        `/tasks/update/${taskID}`,
         { status: newStatus },
         {
           headers: {
@@ -144,7 +144,7 @@ function Body() {
     if (confirmDelete) {
       const token = localStorage.getItem("token");
       try {
-        await axios.delete(`http://localhost:3000/tasks/delete/${taskID}`, {
+        await api.delete(`/tasks/delete/${taskID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

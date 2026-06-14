@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import "../CSS/Body.css";
 import type { Task } from "./Body"; // Import Task interface
 import { Bounce, toast } from "react-toastify";
@@ -57,8 +57,8 @@ function CreateTask({ onClose, onTaskCreated, taskToEdit }: CreateTaskProps) {
     try {
       if (taskToEdit) {
         // Update existing task
-        await axios.put(
-          `http://localhost:3000/tasks/update/${taskToEdit._id}`,
+        await api.put(
+          `/tasks/update/${taskToEdit._id}`,
           {
             taskName,
             priority,
@@ -72,8 +72,8 @@ function CreateTask({ onClose, onTaskCreated, taskToEdit }: CreateTaskProps) {
         );
       } else {
         // Create new task
-        await axios.post(
-          "http://localhost:3000/tasks/create",
+        await api.post(
+          "/tasks/create",
           {
             taskName,
             priority,
